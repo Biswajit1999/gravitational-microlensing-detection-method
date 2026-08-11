@@ -1,0 +1,6 @@
+quantity,injected,recovered,error_pct
+tE_days,20.0,20.005,0.03
+u0,0.12,0.1199,0.11
+mass_ratio_q_from_amplitude,0.0015,1.50e-03,0.32
+mass_ratio_q_from_duration,0.0015,1.51e-03,0.39
+mass_ratio_q_combined,0.0015,1.50e-03,0.03
