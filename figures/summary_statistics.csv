@@ -1,6 +1,8 @@
 quantity,injected,recovered,error_pct
-tE_days,20.0,20.005,0.03
-u0,0.12,0.1199,0.11
-mass_ratio_q_from_amplitude,0.0015,1.50e-03,0.32
-mass_ratio_q_from_duration,0.0015,1.51e-03,0.39
-mass_ratio_q_combined,0.0015,1.50e-03,0.03
+detected_window_days,-,"[21.48, 22.60]",-
+tE_days,20.0,20.010,0.05
+u0,0.12,0.1197,0.21
+tp_days,22.0,22.002,0.002 days abs. error
+mass_ratio_q_from_amplitude,0.0015,1.48e-03,1.15
+mass_ratio_q_from_duration,0.0015,1.49e-03,1.00
+mass_ratio_q_combined,0.0015,1.48e-03,1.07
