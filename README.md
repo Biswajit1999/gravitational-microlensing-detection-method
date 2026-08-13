@@ -126,6 +126,29 @@ pip install -r requirements.txt
 python scripts/microlensing_demo.py
 ```
 
+## Worked example with a real target
+
+OGLE-2005-BLG-390Lb, the first cold super-Earth found by microlensing
+(Beaulieu et al. 2006), gives a real mass ratio to check the scaling
+relations against. Its published planet and host-star masses: 5.5
+Earth masses, orbiting a ~0.22 Solar-mass M dwarf.
+
+```
+Mp = 5.5 * 5.972e24 kg = 3.285e25 kg
+Mstar = 0.22 * 1.989e30 kg = 4.376e29 kg
+q = Mp / Mstar = 7.5e-5
+```
+
+A mass ratio of order $10^{-4}$–$10^{-5}$ like this one predicts, via
+$t_{pert} \sim t_E\sqrt{q}$, a perturbation lasting only about 1% of
+the event's total Einstein time — for a typical bulge event with
+$t_E$ of a few weeks, that's a perturbation measured in hours, exactly
+why real microlensing planet searches need continuous, high-cadence
+monitoring from multiple longitudes (OGLE, MOA, and KMTNet operate
+telescopes spread across the globe partly for this reason: a
+few-hour anomaly is easy to miss entirely from a single site with one
+clear-weather window per night).
+
 ## Result
 
 | Quantity | Injected | Recovered | Error |
