@@ -160,11 +160,16 @@ def main() -> None:
     fit_amp = abs(fit_amp)
     fit_sigma = abs(fit_sigma)
 
-    # Step 5: invert the scaling relations for the mass ratio q, from the
-    # perturbation's fitted amplitude and, independently, its duration.
+    # Step 5: invert the scaling relations for the mass ratio q, using the
+    # perturbation's fitted amplitude and its duration. These are NOT
+    # statistically independent estimates -- both numbers come from the
+    # same single Gaussian fit (fit_amp and fit_sigma), so they share its
+    # fitting errors rather than being two separate pieces of evidence.
+    # The geometric mean below is a convenient single summary number, not
+    # a variance-reducing combination of independent measurements.
     q_from_amp = (fit_amp / AMP_COEFF) ** 2
     q_from_duration = (fit_sigma / (DUR_COEFF * fit_tE)) ** 2
-    q_recovered = np.sqrt(q_from_amp * q_from_duration)  # geometric mean of two independent estimates
+    q_recovered = np.sqrt(q_from_amp * q_from_duration)
 
     tE_error_pct = abs(fit_tE - TRUE_TE_DAYS) / TRUE_TE_DAYS * 100
     q_error_pct = abs(q_recovered - TRUE_Q) / TRUE_Q * 100

@@ -76,8 +76,9 @@ Milky Way stars, and the only method capable of finding free-floating,
 unbound planets with no detectable host at all. Ground-based surveys
 (OGLE, MOA, KMTNet) monitor hundreds of millions of bulge stars every
 night looking for these events, and NASA's Roman Space Telescope
-(launch expected 2027) is purpose-built to run a large-scale space-based
-microlensing survey with far better cadence and precision.
+(currently targeting launch by 30 August 2026) is purpose-built to run
+a large-scale space-based microlensing survey with far better cadence
+and precision.
 
 **Limitation:** every microlensing event is a one-time, non-repeating
 alignment between three objects (observer, lens, source) — once it's
@@ -115,9 +116,12 @@ of the analysis referencing the values used to generate it:
    planetary signal.
 5. **Characterize.** Fit a Gaussian bump to the residual inside the
    detected window, seeded from the window's own center and width, then
-   invert its amplitude and duration through the scaling relations for
-   two independent estimates of the mass ratio $q$, combined as their
-   geometric mean.
+   invert its fitted amplitude and duration through the scaling
+   relations for two estimates of the mass ratio $q$, combined as their
+   geometric mean. These two numbers are not statistically independent
+   checks on each other — both come from the same single Gaussian fit,
+   so they share its fitting errors rather than providing two separate
+   pieces of evidence.
 
 Run it yourself:
 
