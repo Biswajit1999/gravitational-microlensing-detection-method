@@ -130,7 +130,7 @@ pip install -r requirements.txt
 python scripts/microlensing_demo.py
 ```
 
-## Worked example with a real target
+## Sanity check against a real target's published parameters
 
 OGLE-2005-BLG-390Lb, the first cold super-Earth found by microlensing
 (Beaulieu et al. 2006), gives a real mass ratio to check the scaling
