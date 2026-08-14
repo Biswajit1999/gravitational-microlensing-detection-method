@@ -11,6 +11,12 @@ and the standard planetary-perturbation scaling relations in Python,
 and detects a simulated perturbation without ever telling the search
 code where or how large it is.
 
+**[Open the full interactive report](index.html)** — the same physics
+below, plus worked numerical examples, real detection statistics, and
+a live calculator built on the actual Einstein-radius, magnification,
+and perturbation-scaling equations (open locally in a browser, or
+serve with `python -m http.server` from this directory).
+
 ## The physics
 
 ### Why light bends and brightens
@@ -79,6 +85,14 @@ night looking for these events, and NASA's Roman Space Telescope
 (currently targeting launch by 30 August 2026) is purpose-built to run
 a large-scale space-based microlensing survey with far better cadence
 and precision.
+
+Per the NASA Exoplanet Archive's confirmed-planet counts by discovery
+method (accessed 2026-08-14), microlensing accounts for 282 of 6,336
+confirmed exoplanets (~4%) — third by count after transit (4,676,
+~74%) and radial velocity (1,197, ~19%), ahead of direct imaging (98,
+~2%), but disproportionately important for demographics the other
+methods can't reach: cold, wide-separation planets around typical
+Milky Way stars, and free-floating planets with no bound host at all.
 
 **Limitation:** every microlensing event is a one-time, non-repeating
 alignment between three objects (observer, lens, source) — once it's

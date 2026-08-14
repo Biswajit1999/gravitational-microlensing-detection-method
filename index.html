@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gravitational Microlensing — The Physics, the Numbers, and a Live Calculator</title>
+<meta name="description" content="A working reference on gravitational-microlensing exoplanet detection: the Einstein radius and magnification derivations, worked numerical examples, real detection statistics, and an interactive calculator built on the actual equations.">
+<style>
+:root {
+  --bg:#f6f7f9; --panel:#ffffff; --line:#dfe3e8; --text:#181c22; --muted:#5c6470;
+  --accent:#1f7a5c; --accent-soft:#e2f2ea; --sans:"Inter","Segoe UI",system-ui,Arial,sans-serif;
+  --mono:"IBM Plex Mono","Roboto Mono",Consolas,monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg:#10161a; --panel:#161e22; --line:#263239; --text:#e6efe9; --muted:#93a59b; --accent:#4fd6a3; --accent-soft:#182b23; }
+}
+* { box-sizing: border-box; }
+html,body { margin:0; background:var(--bg); color:var(--text); font-family:var(--sans); }
+.wrap { max-width: 980px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+header.hero { border-bottom: 1px solid var(--line); padding-bottom: 2rem; margin-bottom: 2rem; }
+.kicker { color: var(--accent); font: 600 .75rem var(--mono); letter-spacing: .12em; text-transform: uppercase; margin: 0 0 .8rem; }
+h1 { font-size: clamp(2rem, 5vw, 2.9rem); margin: 0 0 .6rem; letter-spacing: -.02em; }
+.tagline { color: var(--muted); font-size: 1.1rem; max-width: 720px; margin: 0; }
+.badges { display:flex; gap:.5rem; margin-top: 1.2rem; flex-wrap: wrap; }
+.badge { font: 600 .68rem var(--mono); background: var(--accent-soft); color: var(--accent); padding: .3rem .6rem; border-radius: 5px; }
+nav.toc { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 1rem 1.4rem; margin: 2rem 0; }
+nav.toc h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 .7rem; }
+nav.toc ol { margin: 0; padding-left: 1.2rem; columns: 2; column-gap: 2rem; font-size: .92rem; }
+nav.toc li { margin-bottom: .4rem; }
+nav.toc a { color: var(--text); text-decoration: none; }
+nav.toc a:hover { color: var(--accent); }
+section { margin: 3rem 0; scroll-margin-top: 1.5rem; }
+h2 { font-size: 1.5rem; margin: 0 0 1rem; letter-spacing: -.01em; }
+h3 { font-size: 1.1rem; margin: 1.6rem 0 .6rem; }
+p { line-height: 1.75; }
+.muted { color: var(--muted); }
+.eq { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 1rem 1.4rem; margin: 1rem 0; overflow-x: auto; }
+.eq p { margin: 0; text-align: center; font-family: var(--mono); font-size: 1.05rem; }
+table { width: 100%; border-collapse: collapse; font-size: .92rem; margin: 1rem 0; }
+th, td { text-align: left; padding: .6rem .7rem; border-bottom: 1px solid var(--line); }
+th { color: var(--muted); font-weight: 600; }
+.figure { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 1rem; margin: 1.2rem 0; }
+.figure img { width: 100%; height: auto; border-radius: 6px; }
+.figure figcaption { color: var(--muted); font-size: .85rem; margin-top: .6rem; }
+.callout { background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 1rem 1.2rem; border-radius: 6px; font-size: .93rem; }
+.calc { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 1.6rem; margin: 1.4rem 0; }
+.calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 1.4rem 2rem; }
+.field { margin-bottom: .3rem; }
+.field label { display: flex; justify-content: space-between; font: 600 .82rem var(--mono); color: var(--muted); margin-bottom: .4rem; }
+.field label span.val { color: var(--accent); }
+.field input[type=range] { width: 100%; accent-color: var(--accent); }
+.calc-results { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap: .8rem; margin-top: 1.6rem; border-top: 1px solid var(--line); padding-top: 1.4rem; }
+.result { background: var(--accent-soft); border-radius: 10px; padding: .9rem 1rem; }
+.result span { display:block; color: var(--muted); font-size: .68rem; text-transform: uppercase; letter-spacing: .06em; margin-bottom: .3rem; }
+.result strong { font: 700 1.3rem var(--mono); color: var(--accent); display:block; }
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: .8rem; margin: 1.2rem 0; }
+.stat { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: .9rem 1rem; }
+.stat span { display:block; color: var(--muted); font-size: .68rem; text-transform: uppercase; letter-spacing: .06em; margin-bottom: .3rem; }
+.stat strong { font: 700 1.25rem var(--mono); color: var(--accent); }
+ol.refs { padding-left: 1.2rem; color: var(--muted); font-size: .92rem; line-height: 1.7; }
+ol.refs li { margin-bottom: .5rem; }
+a { color: var(--accent); }
+code { background: var(--accent-soft); padding: .1rem .35rem; border-radius: 4px; font-size: .88em; }
+footer { border-top: 1px solid var(--line); margin-top: 3rem; padding-top: 1.5rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; color: var(--muted); font-size: .85rem; }
+footer nav { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+footer a { color: var(--muted); text-decoration: none; }
+footer a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <p class="kicker">Exoplanet Detection Methods · Gravitational Microlensing</p>
+    <h1>Gravitational Microlensing</h1>
+    <p class="tagline">The only method sensitive to planets at wide separations, low-mass planets around faint or distant stars, and free-floating planets with no host star at all: a foreground star's gravity briefly bends and magnifies the light of a background star it passes in front of. This page derives the Einstein-radius and magnification physics from first principles, works through real numbers, reports current detection statistics, and includes a live calculator built on the same equations.</p>
+    <div class="badges">
+      <span class="badge">~4% of all confirmed exoplanets</span>
+      <span class="badge">OGLE · MOA · KMTNet · (soon) Roman</span>
+      <span class="badge">Real blind perturbation detection implemented in this repo</span>
+    </div>
+  </header>
+
+  <nav class="toc">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#einstein">1. Why light bends and brightens</a></li>
+      <li><a href="#lightcurve">2. The single-lens light curve</a></li>
+      <li><a href="#planet">3. What a planet adds</a></li>
+      <li><a href="#unique">4. Why this method is unique</a></li>
+      <li><a href="#examples">5. Worked numerical examples</a></li>
+      <li><a href="#calculator">6. Interactive calculator</a></li>
+      <li><a href="#statistics">7. Real detection statistics</a></li>
+      <li><a href="#pipeline">8. How a real search finds a signal</a></li>
+      <li><a href="#limitations">9. Limitations and open problems</a></li>
+      <li><a href="#references">10. References</a></li>
+    </ol>
+  </nav>
+
+  <section id="einstein">
+    <h2>1. Why light bends and brightens</h2>
+    <p>General relativity says mass curves spacetime, and light follows that curvature. When a foreground "lens" star passes close to our line of sight to a background "source" star, it bends the source's light into two separate images too close together to resolve individually — instead we observe their combined, magnified brightness. The characteristic angular scale of this bending is the <strong>Einstein radius</strong>:</p>
+    <div class="eq"><p>θ<sub>E</sub> = √[ (4GM<sub>L</sub>/c²) · (1/D<sub>L</sub> − 1/D<sub>S</sub>) ]</p></div>
+    <p>where M<sub>L</sub> is the lens mass and D<sub>L</sub>, D<sub>S</sub> are the observer-lens and observer-source distances. For a typical Galactic lens this works out to roughly a milliarcsecond — far too small to resolve directly with any telescope, which is exactly why microlensing is detected purely through the brightness change over time, not by imaging anything. Notice the equation requires D<sub>S</sub> &gt; D<sub>L</sub>: the source must sit farther away than the lens for the geometry to produce lensing at all.</p>
+  </section>
+
+  <section id="lightcurve">
+    <h2>2. The single-lens light curve</h2>
+    <p>For a single point-mass lens, the total magnification as a function of the source-lens angular separation u (measured in units of θ<sub>E</sub>) is:</p>
+    <div class="eq"><p>A(u) = (u² + 2) / [u · √(u² + 4)]</p></div>
+    <div class="eq"><p>u(t) = √[ u₀² + ((t − t₀)/t<sub>E</sub>)² ]</p></div>
+    <p>u₀ is the minimum impact parameter (how close the alignment gets, in Einstein radii), t₀ is the time of closest approach, and t<sub>E</sub> = θ<sub>E</sub>/μ<sub>rel</sub> is the <strong>Einstein-radius crossing time</strong> — the lens-source relative proper motion sets how long the whole event takes, typically days to weeks for stars toward the Galactic bulge. Setting u₀→0 shows the magnification formally diverges for a true point source passing exactly behind the lens; real events are capped by the source star's own finite angular size (a "finite-source effect"), which becomes important precisely during the sharpest, most informative part of a planetary perturbation.</p>
+  </section>
+
+  <section id="planet">
+    <h2>3. What a planet adds</h2>
+    <p>If the lens star hosts a planet, the planet's own much smaller gravitational field perturbs the light bending near its position, producing a brief deviation from the smooth single-lens curve above — sometimes a spike, sometimes a dip, depending on the source's trajectory relative to the planet's caustic (a curve in the source plane where magnification formally diverges for a point source). The perturbation's characteristic duration scales with the star-planet mass ratio q = M<sub>p</sub>/M<sub>★</sub> roughly as:</p>
+    <div class="eq"><p>t<sub>pert</sub> ~ t<sub>E</sub> · √q</p></div>
+    <p>(Mao &amp; Paczynski 1991; Gould &amp; Loeb 1992). The perturbation's amplitude is more sensitive to details — source trajectory, caustic topology, and how close the source passes to the planet's caustic all matter — so δA/A ~ √q is a rough, order-of-magnitude scaling rather than a fixed relationship. What's robust is the duration scaling: even a Jupiter-Sun mass ratio of order 10⁻³ gives a perturbation lasting only ~√q ≈ 3% of the main event's duration — hours out of weeks — which is why real microlensing surveys need high-cadence, round-the-clock coverage from multiple longitudes to catch planetary signals at all.</p>
+  </section>
+
+  <section id="unique">
+    <h2>4. Why this method is unique</h2>
+    <p>Microlensing needs no light at all from the planet — it works through gravity alone, which makes it the only method capable of finding truly free-floating, unbound planets with no detectable host star whatsoever. Its sensitivity also peaks for planets a few Einstein radii from their star, roughly the "cold" region beyond a system's ice line that transit photometry (which needs a close-in, edge-on-aligned orbit) and radial velocity (whose signal weakens sharply at wide separation and long period) both struggle to probe. That makes microlensing the leading method for finding low-mass planets at Jupiter-to-Neptune-like separations around typical, often faint and distant, Milky Way stars — a demographic essentially invisible to the other two methods.</p>
+    <p class="callout">The cost of that reach: every microlensing event is a one-time, non-repeating alignment between three objects (observer, lens, source). Once it's over, it's over — the lens star usually can't be reobserved or characterized in detail afterward, unlike a transiting or RV-detected planet whose host keeps orbiting and can be revisited indefinitely.</p>
+  </section>
+
+  <section id="examples">
+    <h2>5. Worked numerical examples</h2>
+    <h3>Mass ratio: OGLE-2005-BLG-390Lb</h3>
+    <p>The first cold super-Earth found by microlensing (Beaulieu et al. 2006) gives a real mass ratio to check the scaling relation against. Its published planet and host-star masses: 5.5 Earth masses, orbiting a ~0.22 Solar-mass M dwarf.</p>
+    <div class="eq"><code>Mp    = 5.5 × 5.972×10²⁴ kg = 3.285×10²⁵ kg
+Mstar = 0.22 × 1.989×10³⁰ kg = 4.376×10²⁹ kg
+q = Mp / Mstar = 7.5×10⁻⁵</code></div>
+    <p>A mass ratio of order 10⁻⁴-10⁻⁵ like this one predicts, via t<sub>pert</sub> ~ t<sub>E</sub>√q, a perturbation lasting only about 1% of the event's total Einstein time — for a typical bulge event with t<sub>E</sub> of a few weeks, that's a perturbation measured in hours, exactly why real microlensing planet searches need continuous, high-cadence monitoring from multiple longitudes. OGLE, MOA, and KMTNet operate telescopes spread across the globe partly for this reason: a few-hour anomaly is easy to miss entirely from a single site with one clear-weather window per night.</p>
+    <h3>Einstein radius and timescale for a typical bulge event</h3>
+    <p>For a lens star of 0.3 Solar masses at 6 kpc, lensing a source star at 8 kpc (typical bulge-lensing-bulge geometry), with a relative proper motion of 4 mas/yr:</p>
+    <div class="eq"><code>θE ≈ 0.32 mas
+tE = θE / μrel = 0.32 mas / 4 mas/yr ≈ 29 days</code></div>
+    <p>This is squarely in the observed range for real bulge microlensing events (typically days to a couple of months), and matches this repo's own simulated event, which uses an injected t<sub>E</sub> of 20 days.</p>
+  </section>
+
+  <section id="calculator">
+    <h2>6. Interactive calculator</h2>
+    <p>Move the sliders below. The outputs are computed live, directly from the Einstein-radius, magnification, and perturbation-scaling equations in Sections 1-3 — nothing here is looked up or pre-baked.</p>
+    <div class="calc">
+      <div class="calc-grid">
+        <div class="field">
+          <label>Lens mass <span class="val" id="mlVal">0.30 M☉</span></label>
+          <input type="range" id="ml" min="0.08" max="1.5" step="0.01" value="0.3">
+        </div>
+        <div class="field">
+          <label>Lens distance <span class="val" id="dlVal">6.0 kpc</span></label>
+          <input type="range" id="dl" min="0.5" max="7.5" step="0.1" value="6.0">
+        </div>
+        <div class="field">
+          <label>Source distance <span class="val" id="dsVal">8.0 kpc</span></label>
+          <input type="range" id="ds" min="8" max="10" step="0.1" value="8.0">
+        </div>
+        <div class="field">
+          <label>Relative proper motion <span class="val" id="muVal">4.0 mas/yr</span></label>
+          <input type="range" id="mu" min="1" max="10" step="0.1" value="4.0">
+        </div>
+        <div class="field">
+          <label>Impact parameter, u₀ <span class="val" id="u0Val">0.30</span></label>
+          <input type="range" id="u0" min="0.01" max="1" step="0.01" value="0.3">
+        </div>
+        <div class="field">
+          <label>Mass ratio, q (log₁₀) <span class="val" id="qVal">1.0×10⁻³</span></label>
+          <input type="range" id="logq" min="-5" max="-1.5" step="0.05" value="-3">
+        </div>
+      </div>
+      <div class="calc-results">
+        <div class="result"><span>Einstein radius, θE</span><strong id="outTheta">–</strong></div>
+        <div class="result"><span>Einstein time, tE</span><strong id="outTE">–</strong></div>
+        <div class="result"><span>Peak magnification, A(u₀)</span><strong id="outA">–</strong></div>
+        <div class="result"><span>Perturbation duration</span><strong id="outPertDur">–</strong></div>
+        <div class="result"><span>Perturbation, % of event</span><strong id="outPertPct">–</strong></div>
+      </div>
+      <p class="callout" id="calcNote" style="margin-top:1.2rem;"></p>
+    </div>
+    <p class="muted" style="font-size:.85rem;">θE uses the Einstein-radius formula from Section 1 (requires source distance greater than lens distance). tE = θE/μ<sub>rel</sub>. Peak magnification uses A(u) from Section 2 at u=u₀. Perturbation duration uses t<sub>pert</sub> ~ t<sub>E</sub>√q from Section 3 — an order-of-magnitude scaling relation, not an exact binary-lens computation (see Section 9).</p>
+  </section>
+
+  <section id="statistics">
+    <h2>7. Real detection statistics</h2>
+    <p>Pulled live from the NASA Exoplanet Archive's confirmed-planet counts by discovery method, accessed 2026-08-14:</p>
+    <div class="stat-grid">
+      <div class="stat"><span>Total confirmed</span><strong>6,336</strong></div>
+      <div class="stat"><span>Via microlensing</span><strong>282 (~4%)</strong></div>
+      <div class="stat"><span>Via transit</span><strong>4,676 (~74%)</strong></div>
+      <div class="stat"><span>Via radial velocity</span><strong>1,197 (~19%)</strong></div>
+      <div class="stat"><span>Via direct imaging</span><strong>98 (~2%)</strong></div>
+    </div>
+    <p>Microlensing is the third most productive detection method by count, but a disproportionately important one for demographics the other methods can't reach: it is the leading method for cold, wide-separation planets around typical Milky Way stars and the only method that has found free-floating planets with no bound host at all. Ground-based surveys <strong>OGLE</strong>, <strong>MOA</strong>, and <strong>KMTNet</strong> monitor hundreds of millions of bulge stars every clear night looking for these events, and NASA's <strong>Roman Space Telescope</strong> (targeting launch by 30 August 2026) is purpose-built to run a large-scale space-based microlensing survey with far better cadence and photometric precision than any ground-based network can achieve — expected to substantially increase this method's share of the total census over the coming decade.</p>
+  </section>
+
+  <div class="figure">
+    <img src="figures/microlensing_recovery.png" alt="Microlensing light curve with planetary perturbation, blind detection and recovery from this repo's own injection-recovery test">
+    <figcaption>Output of this repo's own <code>scripts/microlensing_demo.py</code>: a point-source point-lens (PSPL) fit, blind perturbation-window detection on the residuals, and mass-ratio recovery from an injected planetary signal. See Section 8.</figcaption>
+  </div>
+
+  <section id="pipeline">
+    <h2>8. How a real search finds a signal</h2>
+    <p>This repository builds a simulated light curve, then detects and characterizes the planetary signal in it without any step of the analysis referencing the values used to generate it:</p>
+    <ol>
+      <li><strong>Simulate.</strong> Build a PSPL magnification event with an Einstein time and impact parameter, sampled at high-cadence survey rates (KMTNet-class, every 30 minutes) with a ~2% ground-based crowded-field photometric noise level, and add a short planetary perturbation using the amplitude/duration scaling relations from Section 3 — an analytic approximation, not a full inverse-ray-shooting binary-lens computation (see Section 9).</li>
+      <li><strong>First-pass fit.</strong> Fit the single-lens model to the entire light curve, seeded only from what the data itself shows: the peak time, an impact-parameter estimate from the peak magnification via the small-u approximation A(u)≈1/u, and a timescale estimate from the light curve's width at half maximum.</li>
+      <li><strong>Detect.</strong> Flag points that deviate from that fit by more than a noise threshold, and take the longest contiguous run of flagged points as the perturbation window — the search never looks at the time or mass ratio used to inject the signal.</li>
+      <li><strong>Re-fit clean.</strong> Mask the detected window and re-fit the single-lens model on the remaining points, so the baseline isn't biased by the planetary signal.</li>
+      <li><strong>Characterize.</strong> Fit a Gaussian bump to the residual inside the detected window, seeded from the window's own center and width, then invert its fitted amplitude and duration through the scaling relations for two estimates of the mass ratio q, combined as their geometric mean. These two numbers are not statistically independent checks on each other — both come from the same single Gaussian fit, so they share its fitting errors rather than providing two separate pieces of evidence.</li>
+    </ol>
+    <p>The result from this repo's own run:</p>
+    <table>
+      <tr><th>Quantity</th><th>Injected</th><th>Recovered</th><th>Error</th></tr>
+      <tr><td>Perturbation window</td><td>centered at 22.0 days</td><td>detected at [21.48, 22.60] days</td><td>—</td></tr>
+      <tr><td>Einstein time (tE)</td><td>20.0 days</td><td>20.010 days</td><td>0.05%</td></tr>
+      <tr><td>Mass ratio (q)</td><td>1.50×10⁻³</td><td>1.48×10⁻³</td><td>1.07%</td></tr>
+    </table>
+    <p>Run it yourself: <code>pip install -r requirements.txt &amp;&amp; python scripts/microlensing_demo.py</code>. Tests in <code>tests/test_microlensing.py</code> verify the PSPL formula against its closed-form solution and check the blind perturbation detector on synthetic residuals it hasn't seen the injection parameters for — including that pure noise with no injected bump correctly returns no detection. Runs automatically on every push via GitHub Actions.</p>
+  </section>
+
+  <section id="limitations">
+    <h2>9. Limitations and open problems</h2>
+    <p>This repo's planetary-perturbation model uses the scaling relations for characteristic amplitude and duration from Section 3, not a full binary-lens computation, which requires solving a 5th-order complex polynomial for image positions via inverse ray-shooting or contour integration. This is a standard back-of-the-envelope approach for a rough mass-ratio estimate, but a published microlensing planet detection fits the full binary-lens light curve in detail — which is also needed to break the mass-distance degeneracy mentioned in Section 4. The detection step here also uses a simple sigma-threshold flag on a single light curve; real surveys combine detection statistics across a network of telescopes and correct for finite-source effects near the caustic, neither of which this simulation models.</p>
+    <p>More fundamentally: because every event is a one-time alignment, planet parameters derived from it carry real, often irreducible degeneracies — particularly between the lens system's distance and total mass — that typically need additional follow-up, such as high-resolution imaging years later once the lens and source have visibly separated on the sky, to fully resolve.</p>
+    <p class="callout">A natural next step beyond this repo's scaling-relation approximation: implement the full binary-lens magnification map, or use an existing package such as <code>MulensModel</code> or <code>pyLIMA</code>, both of which implement real binary-lens fitting used in published microlensing papers, and fit this repo's simulated light curve with one of them to see how much the mass-ratio estimate changes.</p>
+  </section>
+
+  <section id="references">
+    <h2>10. References</h2>
+    <ol class="refs">
+      <li>Mao, S. and Paczynski, B., 1991. Gravitational microlensing by double stars and planetary systems. <em>The Astrophysical Journal Letters</em>, 374, L37.</li>
+      <li>Gould, A. and Loeb, A., 1992. Discovering planetary systems through gravitational microlenses. <em>The Astrophysical Journal</em>, 396, pp.104-114.</li>
+      <li>Bond, I.A. et al., 2004. OGLE 2003-BLG-235/MOA 2003-BLG-53: A Planetary Microlensing Event. <em>The Astrophysical Journal Letters</em>, 606(2), L155 — the first microlensing planet detection.</li>
+      <li>Beaulieu, J.-P. et al., 2006. Discovery of a cool planet of 5.5 Earth masses through gravitational microlensing. <em>Nature</em>, 439, pp.437-440 — OGLE-2005-BLG-390Lb.</li>
+      <li>Gaudi, B.S., 2012. Microlensing Surveys for Exoplanets. <em>Annual Review of Astronomy and Astrophysics</em>, 50, pp.411-453.</li>
+      <li>Spergel, D. et al., 2015. Wide-Field InfraRed Survey Telescope-Astrophysics Focused Telescope Assets (WFIRST-AFTA) 2015 Report, arXiv:1503.03757 — design study for the Roman Space Telescope's microlensing survey.</li>
+      <li>Poleski, R. and Yee, J.C., 2019. Modeling microlensing events with MulensModel. <em>Astronomy and Computing</em>, 26, pp.35-49.</li>
+      <li>NASA Exoplanet Archive confirmed-planet counts by discovery method, <a href="https://exoplanetarchive.ipac.caltech.edu/docs/counts_detail.html">exoplanetarchive.ipac.caltech.edu</a> — accessed 2026-08-14.</li>
+      <li>NASA Exoplanet Archive, <a href="https://exoplanetarchive.ipac.caltech.edu/">exoplanetarchive.ipac.caltech.edu</a>.</li>
+    </ol>
+  </section>
+
+  <footer>
+    <span>Biswajit Jana · Exoplanet Detection Methods Series</span>
+    <nav>
+      <a href="README.md">Full README</a>
+      <a href="https://biswajit1999.github.io/Biswajit_Jana.github.io/" target="_blank" rel="noopener">Portfolio</a>
+      <a href="https://github.com/Biswajit1999" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/biswajit-jana-27011a151/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://orcid.org/0009-0002-2411-1891" target="_blank" rel="noopener">ORCID</a>
+    </nav>
+  </footer>
+</div>
+
+<script>
+(function() {
+  const G = 6.674e-11, c = 2.998e8, M_SUN = 1.989e30, KPC = 3.0857e19;
+  const MAS_PER_RAD = (180/Math.PI)*3600*1000;
+
+  const ml = document.getElementById('ml'), dl = document.getElementById('dl'),
+        ds = document.getElementById('ds'), mu = document.getElementById('mu'),
+        u0 = document.getElementById('u0'), logq = document.getElementById('logq');
+
+  const mlVal = document.getElementById('mlVal'), dlVal = document.getElementById('dlVal'),
+        dsVal = document.getElementById('dsVal'), muVal = document.getElementById('muVal'),
+        u0Val = document.getElementById('u0Val'), qVal = document.getElementById('qVal');
+
+  const outTheta = document.getElementById('outTheta'), outTE = document.getElementById('outTE'),
+        outA = document.getElementById('outA'), outPertDur = document.getElementById('outPertDur'),
+        outPertPct = document.getElementById('outPertPct'), calcNote = document.getElementById('calcNote');
+
+  function fmt(x, d) { return Number(x).toFixed(d); }
+
+  function compute() {
+    const ML_msun = parseFloat(ml.value), DL_kpc = parseFloat(dl.value),
+          DS_kpc_raw = parseFloat(ds.value), muRel = parseFloat(mu.value),
+          u0v = parseFloat(u0.value), logqv = parseFloat(logq.value);
+
+    const DS_kpc = Math.max(DS_kpc_raw, DL_kpc + 0.2);
+
+    mlVal.textContent = fmt(ML_msun,2) + ' M☉';
+    dlVal.textContent = fmt(DL_kpc,1) + ' kpc';
+    dsVal.textContent = fmt(DS_kpc,1) + ' kpc';
+    muVal.textContent = fmt(muRel,1) + ' mas/yr';
+    u0Val.textContent = fmt(u0v,2);
+    const q = Math.pow(10, logqv);
+    qVal.textContent = q.toExponential(1).replace('e-', '×10⁻').replace('+','');
+
+    const ML_kg = ML_msun * M_SUN;
+    const DL_m = DL_kpc * KPC;
+    const DS_m = DS_kpc * KPC;
+    const theta_rad = Math.sqrt((4*G*ML_kg/(c*c)) * (1/DL_m - 1/DS_m));
+    const theta_mas = theta_rad * MAS_PER_RAD;
+
+    const tE_days = (theta_mas / muRel) * 365.25;
+
+    const A = (u0v*u0v + 2) / (u0v * Math.sqrt(u0v*u0v + 4));
+
+    const pertFrac = Math.sqrt(q);
+    const pertDur = tE_days * pertFrac;
+
+    outTheta.textContent = fmt(theta_mas,3) + ' mas';
+    outTE.textContent = fmt(tE_days,1) + ' days';
+    outA.textContent = fmt(A,2) + '×';
+    outPertDur.textContent = fmt(pertDur,2) + ' days';
+    outPertPct.textContent = fmt(pertFrac*100,2) + '%';
+
+    calcNote.textContent = 'At this mass ratio, the planetary perturbation lasts about ' + fmt(pertDur*24,1) + ' hours out of a ' + fmt(tE_days,1) + '-day event (' + fmt(pertFrac*100,2) + '% of the total duration) — illustrating why real surveys need continuous, multi-longitude, high-cadence coverage: a single-site, one-window-per-night campaign can miss a perturbation this short entirely.';
+  }
+
+  [ml, dl, ds, mu, u0, logq].forEach(el => el.addEventListener('input', compute));
+  compute();
+})();
+</script>
+</body>
+</html>
