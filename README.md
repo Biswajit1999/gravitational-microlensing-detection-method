@@ -130,6 +130,19 @@ pip install -r requirements.txt
 python scripts/microlensing_demo.py
 ```
 
+## Tests
+
+`tests/test_microlensing.py` checks the PSPL magnification formula
+against its closed-form solution and, more importantly, verifies the
+perturbation-window detector on synthetic residuals it hasn't seen the
+injection parameters for — including a check that pure noise (no
+injected bump) correctly returns no detection. Runs automatically on
+every push via GitHub Actions; run locally with:
+
+```bash
+pytest tests/ -v
+```
+
 ## Sanity check against a real target's published parameters
 
 OGLE-2005-BLG-390Lb, the first cold super-Earth found by microlensing
