@@ -1,8 +1,10 @@
 # Gravitational Microlensing — Exoplanet Detection Method
 
-<img src="images/hero.png" alt="Artist's concept of a gravitational microlensing event" width="360">
+<p align="center">
+  <img src="images/hero.png" alt="Artist's concept of a gravitational microlensing event" width="360">
+</p>
 
-*AI-generated artist's concept — not a real photograph. See the report for the real physics and detection statistics.*
+<p align="center"><em>AI-generated artist's concept — not a real photograph. See the report for the real physics and detection statistics.</em></p>
 
 The only technique sensitive to planets at wide separations, low-mass
 planets around faint or distant stars, and free-floating planets with
@@ -15,11 +17,7 @@ and the standard planetary-perturbation scaling relations in Python,
 and detects a simulated perturbation without ever telling the search
 code where or how large it is.
 
-**[Open the full interactive report](index.html)** — the same physics
-below, plus worked numerical examples, real detection statistics, and
-a live calculator built on the actual Einstein-radius, magnification,
-and perturbation-scaling equations (open locally in a browser, or
-serve with `python -m http.server` from this directory).
+**[Open the full report](https://biswajit1999.github.io/gravitational-microlensing-detection-method/)** — the live GitHub Pages version. You can also open `index.html` locally in a browser, or serve it with `python -m http.server` from this directory.
 
 ## The physics
 
