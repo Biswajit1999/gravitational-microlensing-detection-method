@@ -1,5 +1,9 @@
 # Gravitational Microlensing — Exoplanet Detection Method
 
+<img src="images/hero.png" alt="Artist's concept of a gravitational microlensing event" width="360">
+
+*AI-generated artist's concept — not a real photograph. See the report for the real physics and detection statistics.*
+
 The only technique sensitive to planets at wide separations, low-mass
 planets around faint or distant stars, and free-floating planets with
 no host star at all: a foreground star's gravity briefly bends and
