@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "project": "Gravitational Microlensing — Exoplanet Detection Method",
+  "tables": [
+    {
+      "path": "figures/summary_statistics.csv",
+      "label": "Summary statistics",
+      "role": "Tables and numerical results",
+      "rows": 7,
+      "width_mismatches": 0,
+      "columns": [
+        {
+          "name": "quantity",
+          "blank": 0,
+          "text": 7,
+          "finite": 0,
+          "nonfinite": 0
+        },
+        {
+          "name": "injected",
+          "blank": 0,
+          "text": 1,
+          "finite": 6,
+          "nonfinite": 0
+        },
+        {
+          "name": "recovered",
+          "blank": 0,
+          "text": 1,
+          "finite": 6,
+          "nonfinite": 0
+        },
+        {
+          "name": "error_pct",
+          "blank": 0,
+          "text": 2,
+          "finite": 5,
+          "nonfinite": 0
+        }
+      ]
+    }
+  ],
+  "excluded": []
+}
