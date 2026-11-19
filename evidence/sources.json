@@ -1,0 +1,16 @@
+{
+  "project": "Gravitational Microlensing — Exoplanet Detection Method",
+  "repository": "https://github.com/Biswajit1999/gravitational-microlensing-detection-method",
+  "files": [
+    {
+      "label": "Summary statistics",
+      "path": "figures/summary_statistics.csv",
+      "role": "Tables and numerical results"
+    },
+    {
+      "label": "Microlensing recovery",
+      "path": "figures/microlensing_recovery.png",
+      "role": "Figures"
+    }
+  ]
+}

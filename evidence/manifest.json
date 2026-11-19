@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "project": "Gravitational Microlensing — Exoplanet Detection Method",
+  "repository": "https://github.com/Biswajit1999/gravitational-microlensing-detection-method",
+  "files": [
+    {
+      "label": "Summary statistics",
+      "path": "figures/summary_statistics.csv",
+      "role": "Tables and numerical results",
+      "bytes": 307,
+      "sha256": "4955de32056d433c245e263dafd20e909c34e8f747fb680f1b3d74273fe5c68c",
+      "hash_basis": "LF-normalised text",
+      "format": "CSV",
+      "rows": 7,
+      "columns": 4,
+      "headers": [
+        "quantity",
+        "injected",
+        "recovered",
+        "error_pct"
+      ],
+      "preview": [
+        [
+          "detected_window_days",
+          "-",
+          "[21.48, 22.60]",
+          "-"
+        ],
+        [
+          "tE_days",
+          "20.0",
+          "20.010",
+          "0.05"
+        ],
+        [
+          "u0",
+          "0.12",
+          "0.1197",
+          "0.21"
+        ],
+        [
+          "tp_days",
+          "22.0",
+          "22.002",
+          "0.002 days abs. error"
+        ]
+      ]
+    },
+    {
+      "label": "Microlensing recovery",
+      "path": "figures/microlensing_recovery.png",
+      "role": "Figures",
+      "bytes": 220163,
+      "sha256": "397f797292786e09a0152d30cc8d717b4829f98af91c3f53d1c998d7e1913363",
+      "hash_basis": "exact bytes",
+      "format": "PNG"
+    }
+  ]
+}
